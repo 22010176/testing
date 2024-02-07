@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/dependencies/include",
-                "${workspaceFolder}/src",
+                "${workspaceFolder}/src"
             ],
             "defines": [
                 "_DEBUG",

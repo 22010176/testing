@@ -1,3 +1,0 @@
-#shader vertex
-
-#shader fragment

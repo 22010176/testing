@@ -13,7 +13,7 @@
 
 #include <utilities.h>
 
-uint32_t width = 1920 / 2, height = 1080 / 2;
+float width = 1920 / 2, height = 1080 / 2;
 
 GLFWwindow* Initialize() {
   /* Initialize the library */
@@ -22,6 +22,7 @@ GLFWwindow* Initialize() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
   /* Create a windowed mode window and its OpenGL context */
   GLFWwindow* window = glfwCreateWindow(width, height, "", NULL, NULL);
@@ -60,6 +61,8 @@ void MainLoop(GLFWwindow* window) {
 
   glUseProgram(program);
 
+  uint32_t screen = glGetUniformLocation(program, "Screen");
+
   uint32_t vao, ibo, vbo;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
@@ -71,7 +74,7 @@ void MainLoop(GLFWwindow* window) {
 
   glGenBuffers(1, &vbo);
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  std::vector<float> positions{ -0.5f,-0.5f,0.5f,-0.5f,0.0f,0.5f };
+  std::vector<float> positions{ 0.0f, 0.0f, width, height, 0.0f,height };
   glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(float), positions.data(), GL_DYNAMIC_DRAW);
 
   glEnableVertexAttribArray(0);
@@ -79,9 +82,10 @@ void MainLoop(GLFWwindow* window) {
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
+
     /* Render here */
     glClear(GL_COLOR_BUFFER_BIT);
-
+    glUniform2f(screen, width, height);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)0);
 
     /* Swap front and back buffers */

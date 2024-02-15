@@ -35,7 +35,7 @@ GLFWwindow* Initialize() {
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-
+  //
   return window;
 }
 
